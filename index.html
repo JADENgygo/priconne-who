@@ -1,0 +1,373 @@
+<html>
+	<head>
+		<meta charSet="utf-8" />
+		<meta name="description" content="プリコネRのキャラ当てクイズ" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content="@JADENgygo" />
+		<meta property="og:url" content="https://priconne-who.vercel.app" />
+		<meta property="og:title" content="プリコネ誰でしょう" />
+		<meta property="og:description" content="プリコネRのキャラ当てクイズ" />
+		<meta property="og:image" content="https://priconne-who.vercel.app/img/peko.png" />
+		<meta name="viewport" content="width=690" />
+		<title>プリコネ誰でしょう</title>
+		<link rel="icon" href="img/peko.png" />
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<style>
+			.content {
+			  position: relative;
+			  min-height: 100vh;
+			  padding: 0 0 150px 0;
+			}
+			footer {
+			  position: absolute;
+			  bottom: 0;
+			  width: 100%;
+			}
+		</style>
+	</head>
+	<body class="text-center">
+		<div class="content">
+      <p class="fs-1 pt-3">プリコネ誰でしょう</p>
+      <p>画像からキャラを推理してね</p>
+      <div id="game"></div>
+      <div id="controller">
+        <p class="mt-3">選択肢 (五十音順)</p>
+        <select class="container form-select w-25" id="answer">
+          <option value="0">アオイ</option>
+          <option value="1">アカリ</option>
+          <option value="2">アキノ</option>
+          <option value="3">アヤネ</option>
+          <option value="4">アユミ</option>
+          <option value="5">アリサ</option>
+          <option value="6">アン</option>
+          <option value="7">アンナ</option>
+          <option value="8">イオ</option>
+          <option value="9">イノリ</option>
+          <option value="10">イリヤ</option>
+          <option value="11">ヴァンピィ</option>
+          <option value="12">エリコ</option>
+          <option value="13">カオリ</option>
+          <option value="14">カスミ</option>
+          <option value="15">カヤ</option>
+          <option value="16">カリン</option>
+          <option value="17">キャル</option>
+          <option value="18">キョウカ</option>
+          <option value="19">クウカ</option>
+          <option value="20">クリスティーナ</option>
+          <option value="21">クルミ</option>
+          <option value="22">クレジッタ</option>
+          <option value="23">クロエ</option>
+          <option value="24">グレア</option>
+          <option value="25">コッコロ</option>
+          <option value="26">サレン</option>
+          <option value="27">シェフィ</option>
+          <option value="28">シオリ</option>
+          <option value="29">シズル</option>
+          <option value="30">シノブ</option>
+          <option value="31">ジータ</option>
+          <option value="32">ジュン</option>
+          <option value="33">スズナ</option>
+          <option value="34">スズメ</option>
+          <option value="35">タマキ</option>
+          <option value="36">チエル</option>
+          <option value="37">チカ</option>
+          <option value="38">ツムギ</option>
+          <option value="39">トモ</option>
+          <option value="40">ナナカ</option>
+          <option value="41">ニノン</option>
+          <option value="42">ネネカ</option>
+          <option value="43">ノゾミ</option>
+          <option value="44">ハツネ</option>
+          <option value="45">ヒヨリ</option>
+          <option value="46">ペコリーヌ</option>
+          <option value="47">ホマレ</option>
+          <option value="48">マコト</option>
+          <option value="49">マツリ</option>
+          <option value="50">マヒル</option>
+          <option value="51">マホ</option>
+          <option value="52">ミサキ</option>
+          <option value="53">ミサト</option>
+          <option value="54">ミソギ</option>
+          <option value="55">ミツキ</option>
+          <option value="56">ミフユ</option>
+          <option value="57">ミミ</option>
+          <option value="58">ミヤコ</option>
+          <option value="59">ムイミ</option>
+          <option value="60">モニカ</option>
+          <option value="61">ユイ</option>
+          <option value="62">ユカリ</option>
+          <option value="63">ユキ</option>
+          <option value="64">ユニ</option>
+          <option value="65">ヨリ</option>
+          <option value="66">ラビリスタ</option>
+          <option value="67">ランファ</option>
+          <option value="68">リノ</option>
+          <option value="69">リマ</option>
+          <option value="70">リン</option>
+          <option value="71">ルゥ</option>
+          <option value="72">ルカ</option>
+          <option value="73">ルナ</option>
+          <option value="74">レイ</option>
+        </select>
+        <button class="btn btn-primary mt-3" id="resolve">解答</button>
+        <div class="mt-3" id="result">答え: ？？？</div>
+      </div>
+			<footer class="bg-secondary bg-opacity-25 text-center pt-3 pb-3">
+				<div class="mb-1">
+					<a href="https://twitter.com/@JADENgygo" class="link-dark me-1"><img src="img/twitter.svg" /></a>
+					<a href="https://priconne-portfolio.vercel.app" class="link-dark">プリコネツール</a>
+				</div>
+				<div>画像: &copy; Cygames, Inc.</div>
+			</footer>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+		<script>
+      class Title extends Phaser.Scene {
+        constructor() {
+          super({key: "Title"});
+        }
+        cursor;
+        level;
+        init() {
+          this.cursor = this.input.keyboard.addKeys({ 
+              up: Phaser.Input.Keyboard.KeyCodes.UP,
+              down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+              right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+              left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+              enter: Phaser.Input.Keyboard.KeyCodes.ENTER,
+              esc: Phaser.Input.Keyboard.KeyCodes.ESC,
+          });
+          this.level = 0;
+          document.getElementById('controller').style.visibility = "hidden";
+        }
+        preload() {
+          this.load.image("background", "img/background.webp");
+        }
+        pointer;
+        create() {
+          this.add.image(639.5 / 2, 344 / 2 - 8, "background");
+          this.add.graphics().fillStyle(0xffffff, 0.75).fillRoundedRect((639.5 - 300) / 2, (344 - 330) / 2, 300, 330, 15);
+          this.add.text(275, 30, "難易度", {font: "bold 30px sans-serif", fill: "#000"});
+          const changeLevel = (level) => {
+            this.level = level;
+            this.pointer.y = 88 + level * 50;
+          };
+          this.add.text(253, 90, "NORMAL", {font: "30px sans-serif", fill: "#000"}).setInteractive()
+            .on("pointerdown", () => changeLevel(0));
+          this.add.text(275, 140, "HARD", {font: "30px sans-serif", fill: "#000"}).setInteractive()
+            .on("pointerdown", () => changeLevel(1));
+          this.add.text(230, 190, "VERY HARD", {font: "30px sans-serif", fill: "#000"}).setInteractive()
+            .on("pointerdown", () => changeLevel(2));
+          this.add.text(245, 240, "EXTREME", {font: "30px sans-serif", fill: "#000"}).setInteractive()
+            .on("pointerdown", () => changeLevel(3));
+          this.add.text(390, 290, "決定", {font: "30px sans-serif", fill: "#000"}).setInteractive()
+            .on("pointerdown", () => this.scene.start("Play", {level: this.level}));
+          this.pointer = this.add.text(0, 88, "                         [                        ]", {font: "30px sans-serif", fill: "#000"});
+        }
+        update() {
+          if (Phaser.Input.Keyboard.JustDown(this.cursor.up)) {
+            if (this.level !== 0) {
+              this.level--;
+              this.pointer.y -= 50;
+            }
+          }
+          else if (Phaser.Input.Keyboard.JustDown(this.cursor.down)) {
+            if (this.level !== 3) {
+              this.level++;
+              this.pointer.y += 50;
+            }
+          }
+          else if (Phaser.Input.Keyboard.JustDown(this.cursor.enter)) {
+            this.scene.start("Play", {level: this.level});
+          }
+        }
+      }
+      class Play extends Phaser.Scene {
+        constructor() {
+          super({key: "Play"});
+          console.log('here')
+        }
+        cursor;
+        level;
+        init(data) {
+          this.level = data.level;
+          this.cursor = this.input.keyboard.addKeys({ 
+            esc: Phaser.Input.Keyboard.KeyCodes.ESC,
+          });
+          document.getElementById('controller').style.visibility = "visible";
+        }
+        loading;
+        preload() {
+          this.loading = this.add.text(230, 344 / 2 - 15, "Now Loading...", {font: "30px sans-serif", fill: "#ffffff"});
+          this.load.image("char0", "img/aoi.webp");
+          this.load.image("char1", "img/akari.webp");
+          this.load.image("char2", "img/akino.webp");
+          this.load.image("char3", "img/ayane.webp");
+          this.load.image("char4", "img/ayumi.webp");
+          this.load.image("char5", "img/arisa.webp");
+          this.load.image("char6", "img/an.webp");
+          this.load.image("char7", "img/anna.webp");
+          this.load.image("char8", "img/io.webp");
+          this.load.image("char9", "img/inori.webp");
+          this.load.image("char10", "img/ilya.webp");
+          this.load.image("char11", "img/vampy.webp");
+          this.load.image("char12", "img/eriko.webp");
+          this.load.image("char13", "img/kaori.webp");
+          this.load.image("char14", "img/kasumi.webp");
+          this.load.image("char15", "img/kaya.webp");
+          this.load.image("char16", "img/karin.webp");
+          this.load.image("char17", "img/kyaru.webp");
+          this.load.image("char18", "img/kyouka.webp");
+          this.load.image("char19", "img/kuuka.webp");
+          this.load.image("char20", "img/christina.webp");
+          this.load.image("char21", "img/kurumi.webp");
+          this.load.image("char22", "img/creditta.webp");
+          this.load.image("char23", "img/kuroe.webp");
+          this.load.image("char24", "img/grea.webp");
+          this.load.image("char25", "img/kokkoro.webp");
+          this.load.image("char26", "img/saren.webp");
+          this.load.image("char27", "img/sheffy.webp");
+          this.load.image("char28", "img/shiori.webp");
+          this.load.image("char29", "img/shizuru.webp");
+          this.load.image("char30", "img/shinobu.webp");
+          this.load.image("char31", "img/djeeta.webp");
+          this.load.image("char32", "img/jun.webp");
+          this.load.image("char33", "img/suzuna.webp");
+          this.load.image("char34", "img/suzume.webp");
+          this.load.image("char35", "img/tamaki.webp");
+          this.load.image("char36", "img/chieru.webp");
+          this.load.image("char37", "img/chika.webp");
+          this.load.image("char38", "img/tsumugi.webp");
+          this.load.image("char39", "img/tomo.webp");
+          this.load.image("char40", "img/nanaka.webp");
+          this.load.image("char41", "img/ninon.webp");
+          this.load.image("char42", "img/neneka.webp");
+          this.load.image("char43", "img/nozomi.webp");
+          this.load.image("char44", "img/hatsune.webp");
+          this.load.image("char45", "img/hiyori.webp");
+          this.load.image("char46", "img/peko.webp");
+          this.load.image("char47", "img/homare.webp");
+          this.load.image("char48", "img/makoto.webp");
+          this.load.image("char49", "img/matsuri.webp");
+          this.load.image("char50", "img/mahiru.webp");
+          this.load.image("char51", "img/maho.webp");
+          this.load.image("char52", "img/misaki.webp");
+          this.load.image("char53", "img/misato.webp");
+          this.load.image("char54", "img/misogi.webp");
+          this.load.image("char55", "img/mitsuki.webp");
+          this.load.image("char56", "img/mihuyu.webp");
+          this.load.image("char57", "img/mimi.webp");
+          this.load.image("char58", "img/miyako.webp");
+          this.load.image("char59", "img/nouem.webp");
+          this.load.image("char60", "img/monika.webp");
+          this.load.image("char61", "img/yui.webp");
+          this.load.image("char62", "img/yukari.webp");
+          this.load.image("char63", "img/yuki.webp");
+          this.load.image("char64", "img/yuni.webp");
+          this.load.image("char65", "img/yori.webp");
+          this.load.image("char66", "img/labyrista.webp");
+          this.load.image("char67", "img/ranpha.webp");
+          this.load.image("char68", "img/rino.webp");
+          this.load.image("char69", "img/rima.webp");
+          this.load.image("char70", "img/rin.webp");
+          this.load.image("char71", "img/ruu.webp");
+          this.load.image("char72", "img/ruka.webp");
+          this.load.image("char73", "img/runa.webp");
+          this.load.image("char74", "img/rei.webp");
+        }
+        // normal: 4, 2
+        // hard: 5, 3
+        // vh: 6, 4
+        // extreme: 7, 5
+        char;
+        counter;
+        resolved;
+        back;
+        create() {
+          this.loading.destroy();
+
+          this.char = {};
+          this.counter = 0;
+          this.resolved = false;
+
+          this.char.num = Math.trunc(Math.random() * 1000) % 75;
+          const xi = Math.trunc(Math.random() * 1000) % (4 + this.level);
+          this.char.xi = xi;
+          const yi = Math.trunc(Math.random() * 1000) % (2 + this.level);
+          this.char.yi = yi;
+          this.char.image = this.add.image(319.75, 172 - 32 / 2 / 2, "char" + this.char.num)
+            .setCrop(1280 / (this.level + 4) * xi + 1, 690 / (this.level + 2) * yi + 32, (1280 - 1) / (this.level + 4), (720 - 32) / (this.level + 2))
+            .setScale(0.5);
+          this.char.image.x -= (639.5 / (this.level + 4) * (xi + 0.5)) - 639.5 / 2;
+          this.char.image.y -= (344 / (this.level + 2) * (yi + 0.5)) - 344 / 2;
+
+          document.getElementById("resolve").onpointerdown = () => {
+            if (this.resolved) {
+              return;
+            }
+            const answer = document.getElementById('answer').value;
+            const text = document.getElementById('answer').options[this.char.num].text;
+            document.getElementById('result').textContent = `答え: ${answer === this.char.num.toString() ? "正解！" : "残念！"} ${text}ちゃんでした`;
+            this.resolved = true;
+            this.back.destroy();
+            this.char.diff = {
+              x: 639.5 / 2 - this.char.image.x,
+              y: 344 / 2 - 8 - this.char.image.y,
+              cx: (1280 / (this.level + 4) * this.char.xi + 1) - 1,
+              cy: (690 / (this.level + 2) * this.char.yi + 32) - 32,
+              cw: (1280 - 1) - (1280 - 1) / (this.level + 4),
+              ch: (720 - 32) - (720 - 32) / (this.level + 2),
+            };
+          };
+          document.getElementById('result').textContent = "答え: ？？？";
+
+          this.back = this.add.text(10, 15 / 2, "難易度選択に戻る", {font: "15px sans-serif", fill: "#ffffff"}).setInteractive()
+            .on("pointerdown", () => this.scene.start("Title"));
+        }
+        update() {
+          if (!this.resolved && Phaser.Input.Keyboard.JustDown(this.cursor.esc)) {
+            this.scene.start("Title");
+            return;
+          }
+          if (this.resolved) {
+            if (this.counter < 30) {
+              const coefficient = 1 / 30;
+              this.char.image.x += this.char.diff.x * coefficient;
+              this.char.image.y += this.char.diff.y * coefficient;
+            }
+            else if (this.counter < 60) {
+              const x = 1280 / (this.level + 4) * this.char.xi + 1;
+              const y = 690 / (this.level + 2) * this.char.yi + 32;
+              const w = (1280 - 1) / (this.level + 4);
+              const h = (720 - 32) / (this.level + 2);
+              this.char.image.setCrop(x - this.char.diff.cx / (60 - this.counter), y - this.char.diff.cy / (60 - this.counter), w + this.char.diff.cw / (60 - this.counter), h + this.char.diff.ch / (60 - this.counter));
+            }
+            else if (180 < this.counter) {
+              this.char.image.destroy();
+              this.create();
+              return;
+            }
+            this.counter++;
+          }
+        }
+      }
+
+			const config = {
+				parent: "game",
+				type: Phaser.AUTO,
+        width: 639.5,
+        height: 344,
+				physics: {
+					default: 'arcade',
+					arcade: {
+						gravity: { y: 200 }
+					}
+				},
+        scene: [Title, Play]
+			};
+			const game = new Phaser.Game(config);
+		</script>
+	</body>
+</html>
+
