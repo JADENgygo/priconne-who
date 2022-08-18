@@ -324,6 +324,10 @@
           this.back = this.add.text(10, 15 / 2, "難易度選択に戻る", {font: "15px sans-serif", fill: "#ffffff"}).setInteractive()
             .on("pointerdown", () => this.scene.start("Title"));
         }
+        cropX = 0;
+        cropY = 0;
+        cropWidth = 0;
+        cropHeight = 0;
         update() {
           if (!this.resolved && Phaser.Input.Keyboard.JustDown(this.cursor.esc)) {
             this.scene.start("Title");
@@ -334,13 +338,22 @@
               const coefficient = 1 / 30;
               this.char.image.x += this.char.diff.x * coefficient;
               this.char.image.y += this.char.diff.y * coefficient;
+
+              this.cropX = 0;
+              this.cropY = 0;
+              this.cropWidth = 0;
+              this.cropHeight = 0;
             }
             else if (this.counter < 60) {
               const x = 1280 / (this.level + 4) * this.char.xi + 1;
               const y = 690 / (this.level + 2) * this.char.yi + 32;
               const w = (1280 - 1) / (this.level + 4);
               const h = (720 - 32) / (this.level + 2);
-              this.char.image.setCrop(x - this.char.diff.cx / (60 - this.counter), y - this.char.diff.cy / (60 - this.counter), w + this.char.diff.cw / (60 - this.counter), h + this.char.diff.ch / (60 - this.counter));
+              this.cropX += this.char.diff.cx / 30;
+              this.cropY += this.char.diff.cy / 30;
+              this.cropWidth += this.char.diff.cw / 30;
+              this.cropHeight += this.char.diff.ch / 30;
+              this.char.image.setCrop(x - this.cropX, y - this.cropY, w + this.cropWidth, h + this.cropHeight);
             }
             else if (180 < this.counter) {
               this.char.image.destroy();
@@ -369,4 +382,3 @@
 		</script>
 	</body>
 </html>
-
